@@ -14,7 +14,7 @@ public class OpenIdConnectUserDetails implements UserDetails {
 
     public OpenIdConnectUserDetails(Map<String, String> userInfo, OAuth2AccessToken token) {
         this.userId = userInfo.get("sub");
-        this.username = userInfo.get("email");
+        this.username = userInfo.get("fullname");
         this.token = token;
     }
 

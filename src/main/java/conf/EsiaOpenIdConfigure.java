@@ -9,7 +9,10 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import utils.KeyConverter;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
@@ -18,11 +21,22 @@ import java.util.Map;
 @EnableOAuth2Client
 public class EsiaOpenIdConfigure {
 
+
+
     @Value("${esia.clientId}")
     private String clientId;
 
-    @Value("${esia.clientSecret}")
     private String clientSecret;
+
+    {
+        try {
+            clientSecret = KeyConverter.converter();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Value("${esia.accessTokenUri}")
     private String accessTokenUri;
