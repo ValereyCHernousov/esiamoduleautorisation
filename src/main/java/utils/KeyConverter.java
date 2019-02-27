@@ -1,5 +1,6 @@
 package utils;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import sun.security.util.DerInputStream;
 import sun.security.util.DerValue;
@@ -14,6 +15,7 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.util.Date;
+import java.util.UUID;
 
 public class KeyConverter {
 
@@ -22,8 +24,10 @@ public class KeyConverter {
         String scope = "fullname";
         String timestamp = DateConverter.converterToTimestamp(date).toString();
         String client_id = "OBRN15";
+        UUID state = UUID.randomUUID();
+        String res = scope + timestamp + client_id + state;
 
-        String res = scope + timestamp + client_id;
+
 
         PrivateKey pk = pemFileLoadPrivateKeyPkcs1OrPkcs8Encoded(new File("/home/valerey/IdeaProjects/esiamoduleautorisation/src/main/resources/Keys/frdo_private.key"));
         Signature rsa = Signature.getInstance("SHA256withRSA");
@@ -34,21 +38,7 @@ public class KeyConverter {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        Date date = new Date();
-        String scope = "fullname";
-        String timestamp = DateConverter.converterToTimestamp(date).toString();
-        String client_id = "OBRN15";
 
-        String res = scope + timestamp + client_id;
-
-        PrivateKey pk = pemFileLoadPrivateKeyPkcs1OrPkcs8Encoded(new File("/home/valerey/IdeaProjects/esiamoduleautorisation/src/main/resources/Keys/frdo_private.key"));
-        Signature rsa = Signature.getInstance("SHA256withRSA");
-        rsa.initSign(pk);
-        rsa.update(res.getBytes()); // здесь нужно подписать то, что нужно
-        String sign = new String(rsa.sign()); // подпись
-        System.out.println(sign);
-    }
 
     public static PrivateKey pemFileLoadPrivateKeyPkcs1OrPkcs8Encoded(File pemFileName) throws GeneralSecurityException, IOException {
         // PKCS#8 format
