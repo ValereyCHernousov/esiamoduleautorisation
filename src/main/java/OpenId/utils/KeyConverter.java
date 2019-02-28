@@ -1,6 +1,5 @@
-package utils;
+package OpenId.utils;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import sun.security.util.DerInputStream;
 import sun.security.util.DerValue;
@@ -26,9 +25,6 @@ public class KeyConverter {
         String client_id = "OBRN15";
         UUID state = UUID.randomUUID();
         String res = scope + timestamp + client_id + state;
-
-
-
         PrivateKey pk = pemFileLoadPrivateKeyPkcs1OrPkcs8Encoded(new File("/home/valerey/IdeaProjects/esiamoduleautorisation/src/main/resources/Keys/frdo_private.key"));
         Signature rsa = Signature.getInstance("SHA256withRSA");
         rsa.initSign(pk);

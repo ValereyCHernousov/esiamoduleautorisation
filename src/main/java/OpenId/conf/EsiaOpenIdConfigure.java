@@ -1,4 +1,4 @@
-package conf;
+package OpenId.conf;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +9,8 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import utils.DateConverter;
-import utils.KeyConverter;
+import OpenId.utils.DateConverter;
+import OpenId.utils.KeyConverter;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -34,10 +34,7 @@ public class EsiaOpenIdConfigure {
     @Value("${esia.clientId}")
     private String clientId;
 
-//
-//    private String clientSecret = KeyConverter.converter();
-
-    private String clientSecret = scope + timestamp + clientId + state;
+    private String clientSecret = KeyConverter.converter();
 
     @Value("${esia.accessTokenUri}")
     private String accessTokenUri;
@@ -59,9 +56,9 @@ public class EsiaOpenIdConfigure {
         details.setAccessTokenUri(accessTokenUri);
         details.setUserAuthorizationUri(userAuthorizationUri);
         details.setScope(Arrays.asList("fullname"));
-        details.setId(state);
         details.setPreEstablishedRedirectUri(redirectUri);
-        details.setUseCurrentUri(true);
+        details.setGrantType("authorization_code");
+        details.setUseCurrentUri(false);
         return details;
     }
 

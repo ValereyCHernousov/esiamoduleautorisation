@@ -1,4 +1,4 @@
-package utils;
+package OpenId.utils;
 
 import java.sql.Timestamp;
 import java.util.Date;

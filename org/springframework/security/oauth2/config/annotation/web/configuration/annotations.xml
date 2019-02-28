@@ -1,0 +1,5 @@
+<root>
+    <item name='org.springframework.OpenId.conf.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
